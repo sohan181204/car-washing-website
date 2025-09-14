@@ -1,9 +1,17 @@
+import { useNavigate } from "react-router-dom";
+
 const PlansGrid = () => {
+  const navigate = useNavigate();
+
   const plans = [
     { carType: 'Hatchback', price: 2000, washes: 4 },
     { carType: 'Sedan', price: 2400, washes: 4 },
     { carType: 'SUV', price: 2800, washes: 4 }
   ];
+
+  const handleSubscribe = (plan) => {
+    navigate("/booking", { state: { plan } });
+  };
 
   return (
     <section className="py-16 bg-gradient-to-b from-gray-900 to-black">
@@ -15,7 +23,7 @@ const PlansGrid = () => {
               <h3 className="text-xl font-semibold mb-4 text-black">{plan.carType}</h3>
               <p className="text-2xl font-bold text-primary mb-2">₹{plan.price}</p>
               <p className="text-gray-600 mb-4">{plan.washes} washes/month</p>
-              <button className="btn-primary hover:bg-red-700">Subscribe Now</button>
+              <button className="btn-primary hover:bg-red-700" onClick={() => handleSubscribe(plan)}>Subscribe Now</button>
             </div>
           ))}
         </div>

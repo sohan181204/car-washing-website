@@ -1,15 +1,7 @@
 const Reviews = () => {
   const reviews = [
-    {
-      name: 'John Doe',
-      rating: 5,
-      comment: 'Excellent service! My car looks brand new.'
-    },
-    {
-      name: 'Jane Smith',
-      rating: 5,
-      comment: 'Convenient doorstep service. Highly recommended.'
-    },
+    { name: 'John Doe', rating: 5, comment: 'Excellent service! My car looks brand new.' },
+    { name: 'Jane Smith', rating: 5, comment: 'Convenient doorstep service. Highly recommended.' },
     // Add more reviews
   ];
 

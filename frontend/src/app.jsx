@@ -1,19 +1,27 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Footer from './components/footer';
-import Hero from './components/Hero';
-import HeroLottie from './components/HeroLottie';
-import ServicesCard from './components/ServicesCard';
-import QuoteCalculator from './components/QuoteCalculator';
-import PlansGrid from './components/PlansGrid';
-import BookingForm from './components/BookingForm';
-import Gallery from './components/Gallery';
-import Reviews from './components/Reviews';
-import PageTransition from './components/PageTransition';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
+
+// Import components
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Hero from "./components/Hero";
+import ServicesCard from "./components/ServicesCard";
+import QuoteCalculator from "./components/QuoteCalculator";
+import PlansGrid from "./components/PlansGrid";
+import BookingForm from "./components/BookingForm";
+import Gallery from "./components/Gallery";
+import Reviews from "./components/Reviews";
+import PageTransition from "./components/PageTransition";
+
+// Import LocationPopup
+import LocationPopup from "./components/LocationPopup";
 
 function App() {
   return (
     <Router>
+      {/* Popup overlay on page load */}
+      <LocationPopup />
+
       <div className="min-h-screen bg-background text-content">
         <Navbar />
         <Routes>

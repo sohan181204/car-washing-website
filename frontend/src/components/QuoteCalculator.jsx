@@ -41,6 +41,7 @@ const QuoteCalculator = () => {
               <option value="SUV" className="text-black">SUV</option>
             </select>
           </div>
+
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Service Type</label>
             <select
@@ -54,9 +55,24 @@ const QuoteCalculator = () => {
               <option value="Premium" className="text-black">Premium Detailing & Waxing</option>
             </select>
           </div>
-          <button onClick={calculateQuote} className="btn-primary w-full mb-4 hover:bg-red-700">Calculate</button>
-          {quote && <p className="text-center text-lg font-semibold text-primary mb-4">{quote}</p>}
-          <a href="/booking" className="btn-secondary w-full text-center block hover:bg-gray-400">Book This Service</a>
+
+          <button
+            onClick={calculateQuote}
+            className="btn-primary w-full mb-4 hover:bg-red-700"
+          >
+            Calculate
+          </button>
+
+          {quote && (
+            <p className="text-center text-lg font-semibold text-primary mb-4">{quote}</p>
+          )}
+
+          <a
+            href="/booking"
+            className="btn-secondary w-full text-center block hover:bg-gray-400"
+          >
+            Book This Service
+          </a>
         </div>
       </div>
     </section>

@@ -8,7 +8,7 @@ const BookingForm = () => {
     address: '',
     carType: '',
     service: '',
-    preferredDateTime: ''
+    preferredDateTime: '' // keep empty for user input
   });
 
   const handleChange = (e) => {
@@ -41,6 +41,7 @@ const BookingForm = () => {
               required
             />
           </div>
+
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Phone (WhatsApp)</label>
             <input
@@ -52,6 +53,7 @@ const BookingForm = () => {
               required
             />
           </div>
+
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Address</label>
             <input
@@ -63,6 +65,7 @@ const BookingForm = () => {
               required
             />
           </div>
+
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Car Type</label>
             <select
@@ -72,12 +75,13 @@ const BookingForm = () => {
               className="w-full p-2 border border-gray-300 rounded text-black"
               required
             >
-              <option value="" className="text-black">Select Car Type</option>
-              <option value="Hatchback" className="text-black">Hatchback</option>
-              <option value="Sedan" className="text-black">Sedan</option>
-              <option value="SUV" className="text-black">SUV</option>
+              <option value="">Select Car Type</option>
+              <option value="Hatchback">Hatchback</option>
+              <option value="Sedan">Sedan</option>
+              <option value="SUV">SUV</option>
             </select>
           </div>
+
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Service</label>
             <select
@@ -87,12 +91,13 @@ const BookingForm = () => {
               className="w-full p-2 border border-gray-300 rounded text-black"
               required
             >
-              <option value="" className="text-black">Select Service</option>
-              <option value="Basic" className="text-black">Basic Exterior Wash</option>
-              <option value="Combo" className="text-black">Interior + Exterior Combo</option>
-              <option value="Premium" className="text-black">Premium Detailing & Waxing</option>
+              <option value="">Select Service</option>
+              <option value="Basic">Basic Exterior Wash</option>
+              <option value="Combo">Interior + Exterior Combo</option>
+              <option value="Premium">Premium Detailing & Waxing</option>
             </select>
           </div>
+
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Preferred Date & Time</label>
             <input
@@ -100,11 +105,18 @@ const BookingForm = () => {
               name="preferredDateTime"
               value={formData.preferredDateTime}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              placeholder="dd-mm-yyyy --:--" // shows placeholder in desired format
+              className="w-full p-2 border border-gray-300 rounded text-black"
               required
             />
           </div>
-          <button type="submit" className="btn-primary w-full">Submit Booking</button>
+
+          <button
+            type="submit"
+            className="w-full py-3 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 transition-colors"
+          >
+            Submit Booking
+          </button>
         </form>
       </div>
     </section>
