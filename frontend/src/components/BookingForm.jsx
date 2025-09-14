@@ -50,15 +50,15 @@ Preferred Date & Time: ${formattedDateTime}`;
         <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg">
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Name</label>
-            <input type="text" name="name" value={formData.name} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded" required />
+            <input type="text" name="name" value={formData.name} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded text-black" required />
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Phone (WhatsApp)</label>
-            <input type="text" name="phone" value={formData.phone} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded" required />
+            <input type="text" name="phone" value={formData.phone} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded text-black" required />
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Address</label>
-            <input type="text" name="address" value={formData.address} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded" required />
+            <input type="text" name="address" value={formData.address} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded text-black" required />
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Car Type</label>
