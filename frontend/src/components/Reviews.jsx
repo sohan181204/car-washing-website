@@ -1,32 +1,40 @@
-const Reviews = () => {
-  const reviews = [
-    { name: 'John Doe', rating: 5, comment: 'Excellent service! My car looks brand new.' },
-    { name: 'Jane Smith', rating: 5, comment: 'Convenient doorstep service. Highly recommended.' },
-    // Add more reviews
-  ];
-
+const Footer = () => {
   return (
-    <section className="py-16 bg-gradient-to-b from-gray-900 to-black">
-      <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center mb-12 text-primary">Customer Reviews</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {reviews.map((review, index) => (
-            <div key={index} className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-              <div className="flex items-center mb-4">
-                <div className="flex text-yellow-400">
-                  {[...Array(review.rating)].map((_, i) => (
-                    <span key={i}>★</span>
-                  ))}
-                </div>
-              </div>
-              <p className="text-gray-600 mb-4">"{review.comment}"</p>
-              <p className="font-semibold">- {review.name}</p>
-            </div>
-          ))}
+    <footer className="bg-black text-white p-8">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <h3 className="text-lg font-bold mb-4">Dirty2Clean</h3>
+          <p>Professional doorstep car wash services in Hyderabad.</p>
+        </div>
+        <div>
+          <h4 className="text-md font-semibold mb-4">Quick Links</h4>
+          <ul>
+            <li><a href="/" className="hover:text-primary">Home</a></li>
+            <li><a href="/services" className="hover:text-primary">Services</a></li>
+            <li><a href="/booking" className="hover:text-primary">Booking</a></li>
+            <li><a href="/contact" className="hover:text-primary">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 className="text-md font-semibold mb-4">Contact Info</h4>
+          <p>📞 +91 XXXXX XXXXX</p>
+          <p>📧 yourbusiness@email.com</p>
+          <p>📍 Hyderabad & Nearby</p>
+        </div>
+        <div>
+          <h4 className="text-md font-semibold mb-4">Follow Us</h4>
+          <div className="flex space-x-4">
+            <a href="#" className="hover:text-primary">Facebook</a>
+            <a href="#" className="hover:text-primary">Instagram</a>
+            <a href="#" className="hover:text-primary">Twitter</a>
+          </div>
         </div>
       </div>
-    </section>
+      <div className="text-center mt-8 border-t border-gray-700 pt-4">
+        <p>&copy; 2023 Dirty2Clean. All rights reserved.</p>
+      </div>
+    </footer>
   );
 };
 
-export default Reviews;
+export default Footer;

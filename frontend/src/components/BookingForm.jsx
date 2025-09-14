@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import axios from 'axios';
 
 const BookingForm = () => {
   const [formData, setFormData] = useState({
@@ -8,21 +7,40 @@ const BookingForm = () => {
     address: '',
     carType: '',
     service: '',
-    preferredDateTime: '' // keep empty for user input
+    preferredDateTime: ''
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      await axios.post('http://localhost:5000/api/bookings', formData);
-      alert('Booking submitted successfully!');
-    } catch (error) {
-      alert('Error submitting booking');
-    }
+
+    // Format datetime for WhatsApp
+    const dateTime = new Date(formData.preferredDateTime);
+    const formattedDateTime = `${("0" + dateTime.getDate()).slice(-2)}-${("0" + (dateTime.getMonth()+1)).slice(-2)}-${dateTime.getFullYear()} ${("0"+dateTime.getHours()).slice(-2)}:${("0"+dateTime.getMinutes()).slice(-2)}`;
+
+    // Construct WhatsApp message
+    const message = `Hello, I want to book a service:\n
+Name: ${formData.name}
+Phone: ${formData.phone}
+Address: ${formData.address}
+Car Type: ${formData.carType}
+Service: ${formData.service}
+Preferred Date & Time: ${formattedDateTime}`;
+
+    // Encode message for URL
+    const encodedMessage = encodeURIComponent(message);
+
+    // WhatsApp number (replace with your business number)
+    const whatsappNumber = "919999999999";
+
+    // Open WhatsApp link
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, "_blank");
+
+    // Optional: direct call instead of WhatsApp
+    // window.location.href = `tel:${formData.phone}`;
   };
 
   return (
@@ -32,89 +50,39 @@ const BookingForm = () => {
         <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg">
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
-              required
-            />
+            <input type="text" name="name" value={formData.name} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded" required />
           </div>
-
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Phone (WhatsApp)</label>
-            <input
-              type="text"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
-              required
-            />
+            <input type="text" name="phone" value={formData.phone} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded" required />
           </div>
-
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Address</label>
-            <input
-              type="text"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
-              required
-            />
+            <input type="text" name="address" value={formData.address} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded" required />
           </div>
-
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Car Type</label>
-            <select
-              name="carType"
-              value={formData.carType}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded text-black"
-              required
-            >
+            <select name="carType" value={formData.carType} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded text-black" required>
               <option value="">Select Car Type</option>
               <option value="Hatchback">Hatchback</option>
               <option value="Sedan">Sedan</option>
               <option value="SUV">SUV</option>
             </select>
           </div>
-
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Service</label>
-            <select
-              name="service"
-              value={formData.service}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded text-black"
-              required
-            >
+            <select name="service" value={formData.service} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded text-black" required>
               <option value="">Select Service</option>
-              <option value="Basic">Basic Exterior Wash</option>
-              <option value="Combo">Interior + Exterior Combo</option>
-              <option value="Premium">Premium Detailing & Waxing</option>
+              <option value="Basic Exterior Wash">Basic Exterior Wash</option>
+              <option value="Interior + Exterior Combo">Interior + Exterior Combo</option>
+              <option value="Premium Detailing & Waxing">Premium Detailing & Waxing</option>
             </select>
           </div>
-
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Preferred Date & Time</label>
-            <input
-              type="datetime-local"
-              name="preferredDateTime"
-              value={formData.preferredDateTime}
-              onChange={handleChange}
-              placeholder="dd-mm-yyyy --:--" // shows placeholder in desired format
-              className="w-full p-2 border border-gray-300 rounded text-black"
-              required
-            />
+            <input type="datetime-local" name="preferredDateTime" value={formData.preferredDateTime} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded text-black" required />
           </div>
-
-          <button
-            type="submit"
-            className="w-full py-3 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 transition-colors"
-          >
+          <button type="submit" className="btn-primary w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded">
             Submit Booking
           </button>
         </form>

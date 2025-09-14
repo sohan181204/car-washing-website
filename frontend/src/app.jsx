@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState, useEffect } from "react";
 
-// Import components
+// Components
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Hero from "./components/Hero";
@@ -13,13 +12,13 @@ import Gallery from "./components/Gallery";
 import Reviews from "./components/Reviews";
 import PageTransition from "./components/PageTransition";
 
-// Import LocationPopup
+// Location popup
 import LocationPopup from "./components/LocationPopup";
 
 function App() {
   return (
     <Router>
-      {/* Popup overlay on page load */}
+      {/* Location popup on page load */}
       <LocationPopup />
 
       <div className="min-h-screen bg-background text-content">

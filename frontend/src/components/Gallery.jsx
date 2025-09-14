@@ -14,11 +14,7 @@ const Gallery = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {images.map((img, index) => (
             <div key={index} className="overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow">
-              <img
-                src={img}
-                alt={`Car wash ${index + 1}`}
-                className="w-full h-48 object-cover hover:scale-105 transition-transform"
-              />
+              <img src={img} alt={`Car wash ${index + 1}`} className="w-full h-48 object-cover hover:scale-105 transition-transform" />
             </div>
           ))}
         </div>
