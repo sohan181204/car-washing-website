@@ -19,7 +19,7 @@ exports.createBooking = async (req, res) => {
     // Send confirmation email
     const mailOptions = {
       from: emailUser,
-      to: 'customer@example.com', // Replace with actual email
+      to: 'dirt2clean2909@gmail.com', // Updated to actual email
       subject: 'Booking Confirmation',
       text: `Your booking for ${carType} service on ${preferredDateTime} has been confirmed.`
     };
