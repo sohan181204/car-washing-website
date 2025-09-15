@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from 'axios';
 
 const BookingForm = () => {
   const [formData, setFormData] = useState({
@@ -9,38 +10,35 @@ const BookingForm = () => {
     service: '',
     preferredDateTime: ''
   });
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setMessage('');
 
-    // Format datetime for WhatsApp
-    const dateTime = new Date(formData.preferredDateTime);
-    const formattedDateTime = `${("0" + dateTime.getDate()).slice(-2)}-${("0" + (dateTime.getMonth()+1)).slice(-2)}-${dateTime.getFullYear()} ${("0"+dateTime.getHours()).slice(-2)}:${("0"+dateTime.getMinutes()).slice(-2)}`;
-
-    // Construct WhatsApp message
-    const message = `Hello, I want to book a service:\n
-Name: ${formData.name}
-Phone: ${formData.phone}
-Address: ${formData.address}
-Car Type: ${formData.carType}
-Service: ${formData.service}
-Preferred Date & Time: ${formattedDateTime}`;
-
-    // Encode message for URL
-    const encodedMessage = encodeURIComponent(message);
-
-    // WhatsApp number (replace with your business number)
-    const whatsappNumber = "919999999999";
-
-    // Open WhatsApp link
-    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, "_blank");
-
-    // Optional: direct call instead of WhatsApp
-    // window.location.href = `tel:${formData.phone}`;
+    try {
+      const response = await axios.post('https://dirt2clea-v2-backend.vercel.app/api/bookings', formData);
+      setMessage('Booking submitted successfully!');
+      setFormData({
+        name: '',
+        phone: '',
+        address: '',
+        carType: '',
+        service: '',
+        preferredDateTime: ''
+      });
+    } catch (error) {
+      setMessage('Error submitting booking. Please try again.');
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -82,9 +80,10 @@ Preferred Date & Time: ${formattedDateTime}`;
             <label className="block text-gray-700 mb-2">Preferred Date & Time</label>
             <input type="datetime-local" name="preferredDateTime" value={formData.preferredDateTime} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded text-black" required />
           </div>
-          <button type="submit" className="btn-primary w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded">
-            Submit Booking
+          <button type="submit" disabled={loading} className="btn-primary w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded disabled:opacity-50">
+            {loading ? 'Submitting...' : 'Submit Booking'}
           </button>
+          {message && <p className="mt-4 text-center text-green-600">{message}</p>}
         </form>
       </div>
     </section>
