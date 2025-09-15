@@ -2,7 +2,7 @@ const Booking = require('../models/Booking');
 const nodemailer = require('nodemailer');
 const { emailUser, emailPass } = require('../config');
 
-const transporter = nodemailer.createTransporter({
+const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: emailUser,
