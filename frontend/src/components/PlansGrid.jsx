@@ -10,7 +10,7 @@ const PlansGrid = () => {
   ];
 
   const handleSubscribe = (plan) => {
-    navigate("/book-service", { state: { plan } });
+    navigate("/booking", { state: { plan } });
   };
 
   return (
