@@ -23,8 +23,25 @@ const BookingForm = () => {
     setMessage('');
 
     try {
-      const response = await axios.post('https://dirt2clea-v2-backend.vercel.app/api/bookings', formData);
-      setMessage('Booking submitted successfully!');
+      // Send booking to backend (just save details, no payment)
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/bookings`, formData);
+
+      setMessage('Booking submitted successfully! ✅');
+
+      // WhatsApp Redirect
+      const phoneNumber = '918639837136'; // Add country code
+      const whatsappMessage = `New Booking Request:
+Name: ${formData.name}
+Phone: ${formData.phone}
+Address: ${formData.address}
+Car Type: ${formData.carType}
+Service: ${formData.service}
+Preferred Date & Time: ${formData.preferredDateTime}`;
+
+      const encodedMessage = encodeURIComponent(whatsappMessage);
+      window.location.href = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+      // Reset form
       setFormData({
         name: '',
         phone: '',
@@ -34,7 +51,7 @@ const BookingForm = () => {
         preferredDateTime: ''
       });
     } catch (error) {
-      setMessage('Error submitting booking. Please try again.');
+      setMessage('❌ Error submitting booking. Please try again.');
       console.error(error);
     } finally {
       setLoading(false);
@@ -46,43 +63,102 @@ const BookingForm = () => {
       <div className="container mx-auto px-6 max-w-2xl">
         <h2 className="text-3xl font-bold text-center mb-8">Book Your Service</h2>
         <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg">
+          {/* Name */}
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Name</label>
-            <input type="text" name="name" value={formData.name} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded text-black" required />
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded text-black"
+              required
+            />
           </div>
+
+          {/* Phone */}
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Phone (WhatsApp)</label>
-            <input type="text" name="phone" value={formData.phone} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded text-black" required />
+            <input
+              type="text"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded text-black"
+              required
+            />
           </div>
+
+          {/* Address */}
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Address</label>
-            <input type="text" name="address" value={formData.address} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded text-black" required />
+            <input
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded text-black"
+              required
+            />
           </div>
+
+          {/* Car Type */}
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Car Type</label>
-            <select name="carType" value={formData.carType} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded text-black" required>
+            <select
+              name="carType"
+              value={formData.carType}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded text-black"
+              required
+            >
               <option value="">Select Car Type</option>
               <option value="Hatchback">Hatchback</option>
               <option value="Sedan">Sedan</option>
               <option value="SUV">SUV</option>
             </select>
           </div>
+
+          {/* Service */}
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Service</label>
-            <select name="service" value={formData.service} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded text-black" required>
+            <select
+              name="service"
+              value={formData.service}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded text-black"
+              required
+            >
               <option value="">Select Service</option>
               <option value="Basic Exterior Wash">Basic Exterior Wash</option>
               <option value="Interior + Exterior Combo">Interior + Exterior Combo</option>
               <option value="Premium Detailing & Waxing">Premium Detailing & Waxing</option>
             </select>
           </div>
+
+          {/* Date & Time */}
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Preferred Date & Time</label>
-            <input type="datetime-local" name="preferredDateTime" value={formData.preferredDateTime} onChange={handleChange} className="w-full p-2 border border-gray-300 rounded text-black" required />
+            <input
+              type="datetime-local"
+              name="preferredDateTime"
+              value={formData.preferredDateTime}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded text-black"
+              required
+            />
           </div>
-          <button type="submit" disabled={loading} className="btn-primary w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded disabled:opacity-50">
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="btn-primary w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded disabled:opacity-50"
+          >
             {loading ? 'Submitting...' : 'Submit Booking'}
           </button>
+
+          {/* Message */}
           {message && <p className="mt-4 text-center text-green-600">{message}</p>}
         </form>
       </div>
