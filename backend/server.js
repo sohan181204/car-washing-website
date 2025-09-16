@@ -30,6 +30,12 @@ app.use(async (req, res, next) => {
   }
 });
 
+// Add global error handler to log errors with stack trace
+app.use((err, req, res, next) => {
+  console.error('Unhandled error:', err.stack || err);
+  res.status(500).json({ error: 'Internal Server Error' });
+});
+
 // Routes
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/services', serviceRoutes);
