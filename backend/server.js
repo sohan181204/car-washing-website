@@ -14,9 +14,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use('/api/bookings', bookingRoutes);
-app.use('/api/services', serviceRoutes);
-app.use('/api/subscriptions', subscriptionRoutes);
+app.use('/bookings', bookingRoutes);
+app.use('/services', serviceRoutes);
+app.use('/subscriptions', subscriptionRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
