@@ -1,6 +1,7 @@
-const Booking = require('../models/Booking');
 const nodemailer = require('nodemailer');
-const { emailUser, emailPass } = require('../config');
+
+const emailUser = process.env.EMAIL_USER;
+const emailPass = process.env.EMAIL_PASS;
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -10,11 +11,13 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+let bookings = []; // In-memory storage
+
 exports.createBooking = async (req, res) => {
   try {
     const { name, phone, address, carType, service, preferredDateTime } = req.body;
-    const booking = new Booking({ name, phone, address, carType, service, preferredDateTime });
-    await booking.save();
+    const booking = { id: Date.now(), name, phone, address, carType, service, preferredDateTime };
+    bookings.push(booking);
 
     // Send confirmation email
     const mailOptions = {
@@ -23,20 +26,21 @@ exports.createBooking = async (req, res) => {
       subject: 'Booking Confirmation',
       text: `Your booking for ${carType} service on ${preferredDateTime} has been confirmed.`
     };
-    transporter.sendMail(mailOptions);
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error('Email send error:', error);
+      } else {
+        console.log('Email sent:', info.response);
+      }
+    });
 
     res.status(201).json({ message: 'Booking created successfully', booking });
   } catch (error) {
     console.error('Error creating booking:', error);
-    res.status(500).json({ error: error.message, stack: error.stack });
+    res.status(500).json({ error: error.message });
   }
 };
 
-exports.getBookings = async (req, res) => {
-  try {
-    const bookings = await Booking.find().populate('service');
-    res.json(bookings);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+exports.getBookings = (req, res) => {
+  res.json(bookings);
 };
