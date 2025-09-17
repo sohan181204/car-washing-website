@@ -11,7 +11,6 @@ const LocationPopup = () => {
     "Jubilee Hills",
     "Secunderabad",
     "Kukatpally",
-    "Ameerpet",
     "Miyapur"
   ];
 

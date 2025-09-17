@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import axios from 'axios';
 
 const BookingForm = () => {
   const [formData, setFormData] = useState({
@@ -10,27 +9,18 @@ const BookingForm = () => {
     service: '',
     preferredDateTime: ''
   });
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
-    setMessage('');
 
-    try {
-      // Send booking to backend (just save details, no payment)
-      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/bookings`, formData);
-
-      setMessage('Booking submitted successfully! ✅');
-
-      // WhatsApp Redirect
-      const phoneNumber = '918639837136'; // Add country code
-      const whatsappMessage = `New Booking Request:
+    // WhatsApp Redirect
+    const phoneNumber = '918309993623'; // Add country code
+    const whatsappMessage = `New Booking Request:
 Name: ${formData.name}
 Phone: ${formData.phone}
 Address: ${formData.address}
@@ -38,24 +28,9 @@ Car Type: ${formData.carType}
 Service: ${formData.service}
 Preferred Date & Time: ${formData.preferredDateTime}`;
 
-      const encodedMessage = encodeURIComponent(whatsappMessage);
-      window.location.href = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-
-      // Reset form
-      setFormData({
-        name: '',
-        phone: '',
-        address: '',
-        carType: '',
-        service: '',
-        preferredDateTime: ''
-      });
-    } catch (error) {
-      setMessage('❌ Error submitting booking. Please try again.');
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+    const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    window.open(url, '_blank');
   };
 
   return (
@@ -152,14 +127,10 @@ Preferred Date & Time: ${formData.preferredDateTime}`;
           {/* Submit Button */}
           <button
             type="submit"
-            disabled={loading}
-            className="btn-primary w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded disabled:opacity-50"
+            className="btn-primary w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded"
           >
-            {loading ? 'Submitting...' : 'Submit Booking'}
+            Submit Booking
           </button>
-
-          {/* Message */}
-          {message && <p className="mt-4 text-center text-green-600">{message}</p>}
         </form>
       </div>
     </section>
