@@ -4,14 +4,8 @@ const LocationPopup = () => {
   const [isOpen, setIsOpen] = useState(true); // popup visible by default
 
   const locations = [
-    "Banjara Hills",
-    "Hitech City",
     "Gachibowli",
-    "Madhapur",
-    "Jubilee Hills",
-    "Secunderabad",
-    "Kukatpally",
-    "Miyapur"
+    "Manikonda"
   ];
 
   // Auto-close popup after 10 seconds

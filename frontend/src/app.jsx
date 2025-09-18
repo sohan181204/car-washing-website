@@ -14,6 +14,7 @@ import PageTransition from "./components/PageTransition";
 
 // Location popup
 import LocationPopup from "./components/LocationPopup";
+import FloatingCallIcon from "./components/FloatingCallIcon";
 
 function App() {
   return (
@@ -89,6 +90,7 @@ function App() {
           />
         </Routes>
         <Footer />
+        <FloatingCallIcon />
       </div>
     </Router>
   );

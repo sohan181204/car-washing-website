@@ -11,7 +11,6 @@ const app = express();
 
 // Recommended CORS config: allow your frontend domain
 const allowedOrigins = [
-  'https://dirt2clea-frontend.vercel.app', // adjust if you use custom domain
   'http://localhost:3000', // for local development
 ];
 app.use(cors({
